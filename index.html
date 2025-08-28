@@ -7,7 +7,7 @@
   <title>Sacred Revelations</title>
 
   <style>
-    /* === RESET BÁSICO === */
+    /* RESET */
     * {margin:0;padding:0;box-sizing:border-box;}
     body {
       background-color:#ffffff; /* fundo branco */
@@ -18,77 +18,6 @@
     header {
       padding:20px;
       text-align:center;
-    }
-    /* Chat widget */
-    #chat-widget-wp-optimized {
-      font-family: 'Georgia', serif;
-      background-color: #ffffff;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      overflow: hidden;
-      max-width: 500px;
-      margin: 20px auto;
-    }
-    #chat-widget-wp-optimized #chat-container {
-      max-width: 100%;
-      margin: auto;
-      padding: 20px;
-      height: 350px; 
-      background-color: #ffffff;
-      display: flex;
-      flex-direction: column-reverse;
-      overflow-y:auto;
-      scrollbar-width:none;
-    }
-    #chat-widget-wp-optimized #chat-container::-webkit-scrollbar {display:none;}
-    #chat-widget-wp-optimized .comment {
-      padding: 15px 25px;
-      border-bottom: 1px solid #eee;
-      background-color: #f3f4f6;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      border-left: 4px solid #1f2937;
-    }
-    #chat-widget-wp-optimized .comment .user {
-      font-weight:bold;
-      font-size:16px;
-      color:#1f2937;
-      margin-bottom:5px;
-    }
-    #chat-widget-wp-optimized .comment .text {
-      font-size:15px;
-      color:#374151;
-      white-space:pre-wrap;
-    }
-    #chat-widget-wp-optimized #title {
-      text-align:center;
-      color:#ffffff;
-      background-color:#333333;
-      padding:15px;
-      font-size:20px;
-      border-bottom:2px solid #333333;
-      position:relative;
-    }
-    #chat-widget-wp-optimized #comment-form {
-      padding:20px;
-      background-color:#fff;
-      border-top:2px solid #ccc;
-    }
-    #chat-widget-wp-optimized textarea {
-      width:100%;padding:10px;margin-top:10px;
-      border:2px solid #ddd;border-radius:8px;
-      resize:none;font-size:14px;
-    }
-    #chat-widget-wp-optimized input[type="submit"] {
-      display:block;margin:15px auto 0;
-      background-color:#333;color:#fff;
-      border:none;border-radius:8px;
-      padding:10px;width:100%;
-      cursor:pointer;font-size:14px;
-    }
-    #chat-widget-wp-optimized input[type="submit"]:hover {
-      background-color:#555;
     }
     /* Rodapé */
     footer {
@@ -113,23 +42,6 @@
       s.async=!0;
       document.head.appendChild(s);
     </script>
-
-    <!-- CHAT -->
-    <div id="chat-widget-wp-optimized">
-      <div id="title">
-        LIVE CHAT
-        <span id="viewer-count" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:14px;background:rgba(255,255,255,0.2);padding:4px 8px;border-radius:20px;">
-          🔴 <span id="viewer-number">30</span> online
-        </span>
-      </div>
-      <div id="chat-container"></div>
-      <div id="comment-form">
-        <form id="form">
-          <textarea id="user-comment" placeholder="Digite seu comentário..." rows="3" required></textarea>
-          <input type="submit" value="Enviar">
-        </form>
-      </div>
-    </div>
   </header>
 
   <footer>
@@ -138,30 +50,6 @@
       <a href="privacidade.html">Privacy</a>
     </div>
   </footer>
-
-  <script>
-    // Simples script de chat (versão resumida)
-    (function(){
-      const chatContainer=document.getElementById('chat-container');
-      const form=document.getElementById('form');
-      const input=document.getElementById('user-comment');
-      function addComment(user,text){
-        const div=document.createElement('div');
-        div.className="comment";
-        div.innerHTML=`<div class="user">${user}:</div><div class="text">${text}</div>`;
-        chatContainer.prepend(div);
-      }
-      form.addEventListener('submit',e=>{
-        e.preventDefault();
-        if(input.value.trim()){
-          addComment("Você",input.value.trim());
-          input.value="";
-        }
-      });
-      // Comentário inicial
-      setTimeout(()=>{addComment("Moderador","Bem-vindo ao chat 👋");},1000);
-    })();
-  </script>
 
 </body>
 </html>
