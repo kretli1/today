@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>(1) Sacred Revelations</title>
+  <title>Sacred Revelations</title>
 
-  <!-- Preconnect leve (evita DNS+TCP+TLS na hora H) -->
+  <!-- Preconnect (barato) -->
   <link rel="preconnect" href="https://cdn.converteai.net" crossorigin>
   <link rel="preconnect" href="https://scripts.converteai.net" crossorigin>
   <link rel="preconnect" href="https://images.converteai.net" crossorigin>
   <link rel="preconnect" href="https://api.vturb.com.br" crossorigin>
   <link rel="preconnect" href="https://cdn.utmify.com.br" crossorigin>
 
-  <!-- UTMify (async/defer) -->
+  <!-- UTMify -->
   <script>
     window.pixelId = "68a93a811eb2a944628c570c";
     (function () {
@@ -34,10 +34,10 @@
     body{background:#fff;color:var(--fg);font-family:Arial,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Ubuntu,"Helvetica Neue",sans-serif;line-height:1.5}
     header{padding:20px;text-align:center}
 
-    /* --- LITE PLAYER (reserva de espaço = zero CLS) --- */
+    /* --- LITE PLAYER VERTICAL (9:16) --- */
     .video-shell{
-      width:100%;max-width:540px;margin:0 auto;
-      aspect-ratio:16/9; /* ajuste p/ 9/16 se seu criativo for vertical */
+      width:100%;max-width:400px;margin:0 auto;
+      aspect-ratio:9/16;            /* formato VERTICAL */
       background:#000;border-radius:12px;overflow:hidden;position:relative;
       box-shadow:0 6px 18px rgba(0,0,0,.15)
     }
@@ -53,12 +53,12 @@
     .video-play:hover{transform:scale(1.02);background:linear-gradient(0deg,rgba(0,0,0,.2),rgba(0,0,0,.2))}
     .video-play svg{width:72px;height:72px;background:#ff0000;border-radius:50%;padding:12px}
 
-    /* Chat container – espaço reservado p/ evitar CLS */
+    /* Chat (espaço reservado p/ evitar CLS) */
     #chat-widget-wp-optimized{
       font-family:Georgia,serif; background:#fff; border-radius:10px; border:1px solid #ccc;
       box-shadow:0 4px 12px rgba(0,0,0,.15); overflow:hidden; max-width:500px; margin:20px auto
     }
-    #chat-widget-wp-optimized.lazy{min-height:110px} /* placeholder antes de carregar o script */
+    #chat-widget-wp-optimized.lazy{min-height:110px}
     #chat-widget-wp-optimized #chat-container{
       max-width:100%; margin:auto; padding:20px; overflow:hidden; height:350px;
       background:#fff; display:flex; flex-direction:column-reverse; scrollbar-width:none; -ms-overflow-style:none
@@ -91,14 +91,14 @@
 <body>
   <header>
 
-    <!-- LITE PLAYER: clica ou entra na viewport => carrega player VTurb -->
+    <!-- LITE PLAYER (vertical 9:16): clica ou entra na viewport => carrega VTurb -->
     <div id="lite-player"
          class="video-shell"
          data-player-id="689b9a74cca2969340232a58"
          data-account="9ab5476f-5199-4f12-93bc-226a7b2a97e0"
-         data-poster="https://images.converteai.net/placeholder/1280x720.jpg">
+         data-poster="https://images.converteai.net/placeholder/720x1280.jpg">
       <img class="video-poster" alt="Play video" fetchpriority="low"
-           src="https://images.converteai.net/placeholder/1280x720.jpg" />
+           src="https://images.converteai.net/placeholder/720x1280.jpg" />
       <button class="video-play" aria-label="Reproduzir vídeo" title="Reproduzir">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="#fff"/></svg>
       </button>
@@ -144,12 +144,13 @@
       const mountRealPlayer = async () => {
         if (shell.dataset.loaded) return;
         shell.dataset.loaded = "1";
-        // Remove poster + botão
         shell.innerHTML = '';
-        // Cria webcomponent + injeta script do player
         const el = document.createElement('vturb-smartplayer');
         el.id = 'vid-' + playerId;
-        el.style.display = 'block'; el.style.margin = '0 auto'; el.style.width = '100%'; el.style.height = '100%';
+        el.style.display = 'block';
+        el.style.margin = '0 auto';
+        el.style.width = '100%';
+        el.style.height = '100%';
         shell.appendChild(el);
         await loadScript(`https://scripts.converteai.net/${account}/players/${playerId}/v4/player.js`);
       };
@@ -157,7 +158,7 @@
       // Click para carregar
       shell.addEventListener('click', mountRealPlayer, {once:true});
 
-      // Lazy por viewport (para garantir LCP melhor sem bloquear)
+      // Lazy por viewport
       if ('IntersectionObserver' in window){
         const io = new IntersectionObserver((entries)=>{
           entries.forEach(e=>{ if(e.isIntersecting){ mountRealPlayer(); io.disconnect(); }});
@@ -176,7 +177,6 @@
         wrap.dataset.started = "1";
         wrap.classList.remove('lazy');
 
-        // === O SEU SCRIPT ORIGINAL DO CHAT (encurtado aqui) ===
         (function(){
           const chatContainer = wrap.querySelector('#chat-container');
           const form = wrap.querySelector('#form');
@@ -220,7 +220,7 @@
               currentViewers=Math.max(currentViewers,next.viewersMin); targetViewers=next.viewersMax;},180000);
           }
 
-          // disparo dos blocos (mais leve)
+          // disparo dos blocos (leve)
           const startTimes=[0,180000,1500000], intervals=[5000,10000,1200];
           commentBlocks.forEach((block,idx)=>{
             setTimeout(()=>{
@@ -235,18 +235,14 @@
         })();
       }
 
-      const onView = () => {
-        if ('IntersectionObserver' in window){
-          const io = new IntersectionObserver((entries)=>{
-            entries.forEach(e=>{ if(e.isIntersecting){ startChat(); io.disconnect(); }});
-          },{rootMargin:'200px'});
-          io.observe(wrap);
-        } else {
-          // fallback
-          window.addEventListener('load', startChat, {once:true});
-        }
-      };
-      onView();
+      if ('IntersectionObserver' in window){
+        const io = new IntersectionObserver((entries)=>{
+          entries.forEach(e=>{ if(e.isIntersecting){ startChat(); io.disconnect(); }});
+        },{rootMargin:'200px'});
+        io.observe(wrap);
+      } else {
+        window.addEventListener('load', startChat, {once:true});
+      }
     })();
   </script>
 </body>
