@@ -1,323 +1,253 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-
-  <script>
-  window.pixelId = "68a93a811eb2a944628c570c";
-  var a = document.createElement("script");
-  a.setAttribute("async", "");
-  a.setAttribute("defer", "");
-  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-  document.head.appendChild(a);
-</script>
-
-<script>!function(i,n){i._plt=i._plt||(n&&n.timeOrigin?n.timeOrigin+n.now():Date.now())}(window,performance);</script>
-<link rel="preload" href="https://scripts.converteai.net/9ab5476f-5199-4f12-93bc-226a7b2a97e0/players/689b9a74cca2969340232a58/v4/player.js" as="script">
-<link rel="preload" href="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js" as="script">
-<link rel="preload" href="https://cdn.converteai.net/9ab5476f-5199-4f12-93bc-226a7b2a97e0/689b99fa69a1b738d3826822/main.m3u8" as="fetch">
-<link rel="dns-prefetch" href="https://cdn.converteai.net">
-<link rel="dns-prefetch" href="https://scripts.converteai.net">
-<link rel="dns-prefetch" href="https://images.converteai.net">
-<link rel="dns-prefetch" href="https://api.vturb.com.br">
-  
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sacred Revelations</title>
 
+  <!-- Preconnect leve (evita DNS+TCP+TLS na hora H) -->
+  <link rel="preconnect" href="https://cdn.converteai.net" crossorigin>
+  <link rel="preconnect" href="https://scripts.converteai.net" crossorigin>
+  <link rel="preconnect" href="https://images.converteai.net" crossorigin>
+  <link rel="preconnect" href="https://api.vturb.com.br" crossorigin>
+  <link rel="preconnect" href="https://cdn.utmify.com.br" crossorigin>
+
+  <!-- UTMify (async/defer) -->
+  <script>
+    window.pixelId = "68a93a811eb2a944628c570c";
+    (function () {
+      var a = document.createElement("script");
+      a.async = true; a.defer = true;
+      a.src = "https://cdn.utmify.com.br/scripts/pixel/pixel.js";
+      document.head.appendChild(a);
+    })();
+  </script>
+
+  <!-- Paint timing leve -->
+  <script>!function(i,n){i._plt=i._plt||(n&&n.timeOrigin?n.timeOrigin+n.now():Date.now())}(window,performance);</script>
+
   <style>
-    * {margin:0;padding:0;box-sizing:border-box;}
-    body {
-      background-color:#ffffff; /* fundo branco */
-      font-family: Arial, sans-serif;
-      color:#000;
-      line-height:1.5;
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#ffffff; --fg:#000; --muted:#f3f4f6; --ink:#1f2937; --ink2:#374151; --brand:#333333;
     }
-    header {
-      padding:20px;
-      text-align:center;
+    body{background:#fff;color:var(--fg);font-family:Arial,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Ubuntu,"Helvetica Neue",sans-serif;line-height:1.5}
+    header{padding:20px;text-align:center}
+
+    /* --- LITE PLAYER (reserva de espaço = zero CLS) --- */
+    .video-shell{
+      width:100%;max-width:540px;margin:0 auto;
+      aspect-ratio:16/9; /* ajuste p/ 9/16 se seu criativo for vertical */
+      background:#000;border-radius:12px;overflow:hidden;position:relative;
+      box-shadow:0 6px 18px rgba(0,0,0,.15)
     }
-    footer {
-      background-color:#000000; /* preto */
-      color:#ffffff; /* texto branco */
-      text-align:center;
-      padding:15px;
-      margin-top:40px;
+    .video-poster{
+      width:100%;height:100%;object-fit:cover;display:block;
+      filter:brightness(.9)
     }
-    footer a {color:#ffffff;text-decoration:none;margin:0 5px;}
-    footer a:hover {text-decoration:underline;}
+    .video-play{
+      position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+      cursor:pointer;background:linear-gradient(0deg,rgba(0,0,0,.25),rgba(0,0,0,.25));
+      transition:transform .15s ease, background .2s ease
+    }
+    .video-play:hover{transform:scale(1.02);background:linear-gradient(0deg,rgba(0,0,0,.2),rgba(0,0,0,.2))}
+    .video-play svg{width:72px;height:72px;background:#ff0000;border-radius:50%;padding:12px}
+
+    /* Chat container – espaço reservado p/ evitar CLS */
+    #chat-widget-wp-optimized{
+      font-family:Georgia,serif; background:#fff; border-radius:10px; border:1px solid #ccc;
+      box-shadow:0 4px 12px rgba(0,0,0,.15); overflow:hidden; max-width:500px; margin:20px auto
+    }
+    #chat-widget-wp-optimized.lazy{min-height:110px} /* placeholder antes de carregar o script */
+    #chat-widget-wp-optimized #chat-container{
+      max-width:100%; margin:auto; padding:20px; overflow:hidden; height:350px;
+      background:#fff; display:flex; flex-direction:column-reverse; scrollbar-width:none; -ms-overflow-style:none
+    }
+    #chat-widget-wp-optimized #chat-container::-webkit-scrollbar{display:none}
+    #chat-widget-wp-optimized .comment{
+      padding:15px 25px; display:flex; flex-direction:column; border-bottom:1px solid #eee;
+      background:var(--muted); border-radius:8px; margin-bottom:10px; flex-grow:1; overflow:hidden; border-left:4px solid var(--ink)
+    }
+    #chat-widget-wp-optimized .user{font-weight:bold;font-size:18px;color:var(--ink);margin-bottom:5px}
+    #chat-widget-wp-optimized .text{font-size:18px;color:var(--ink2);white-space:pre-wrap}
+    #title{
+      text-align:center; color:#fff; background:var(--brand); padding:15px; font-size:24px; font-family:Georgia,serif;
+      border-bottom:2px solid var(--brand); position:relative
+    }
+    #comment-form{max-width:100%;margin:auto;padding:20px;background:#fff;border-top:2px solid #ccc}
+    #chat-widget-wp-optimized textarea{
+      width:100%; padding:15px; margin-top:10px; border:2px solid #ddd; border-radius:8px; box-sizing:border-box; resize:none; font-size:16px; font-family:Georgia,serif
+    }
+    #chat-widget-wp-optimized input[type="submit"]{
+      display:block; margin:auto; margin-top:15px; background:var(--brand); color:#fff; border:none; border-radius:8px; padding:15px; cursor:pointer; font-size:16px; width:100%; transition:background .3s ease
+    }
+    #chat-widget-wp-optimized input[type="submit"]:hover{background:#2b2b2b}
+
+    footer{background:#000;color:#fff;text-align:center;padding:15px;margin-top:40px}
+    footer a{color:#fff;text-decoration:none;margin:0 5px}
+    footer a:hover{text-decoration:underline}
   </style>
 </head>
 <body>
-
   <header>
-    <!-- PLAYER -->
-    <vturb-smartplayer id="vid-689b9a74cca2969340232a58" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"></vturb-smartplayer> <script type="text/javascript"> var s=document.createElement("script"); s.src="https://scripts.converteai.net/9ab5476f-5199-4f12-93bc-226a7b2a97e0/players/689b9a74cca2969340232a58/v4/player.js", s.async=!0,document.head.appendChild(s); </script>
-    
-    <!-- CHAT -->
-    <div id="chat-widget-wp-optimized">
-<style>
-    /* Estilos gerais para o container do widget */
-    #chat-widget-wp-optimized {
-        font-family: 'Georgia', serif;
-        background-color: #ffffff;
-        border-radius: 10px;
-        border: 1px solid #ccc;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        overflow: hidden;
-        max-width: 500px;
-        margin: 20px auto;
-    }
 
-    #chat-widget-wp-optimized #chat-container {
-        max-width: 100%;
-        margin: auto;
-        padding: 20px;
-        overflow: hidden;
-        height: 350px; 
-        background-color: #ffffff;
-        display: flex;
-        flex-direction: column-reverse;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-    }
-    
-    #chat-widget-wp-optimized #chat-container::-webkit-scrollbar {
-        display: none;
-    }
+    <!-- LITE PLAYER: clica ou entra na viewport => carrega player VTurb -->
+    <div id="lite-player"
+         class="video-shell"
+         data-player-id="689b9a74cca2969340232a58"
+         data-account="9ab5476f-5199-4f12-93bc-226a7b2a97e0"
+         data-poster="https://images.converteai.net/placeholder/1280x720.jpg">
+      <img class="video-poster" alt="Play video" fetchpriority="low"
+           src="https://images.converteai.net/placeholder/1280x720.jpg" />
+      <button class="video-play" aria-label="Reproduzir vídeo" title="Reproduzir">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="#fff"/></svg>
+      </button>
+    </div>
 
-    #chat-widget-wp-optimized .comment {
-        padding: 15px 25px;
-        display: flex;
-        flex-direction: column;
-        border-bottom: 1px solid #eee;
-        background-color: #f3f4f6;
-        border-radius: 8px;
-        margin-bottom: 10px;
-        flex-grow: 1;
-        overflow: hidden;
-        border-left: 4px solid #1f2937;
-    }
+    <!-- CHAT (lazy: só inicializa quando entra na viewport) -->
+    <div id="chat-widget-wp-optimized" class="lazy">
+      <div id="title">LIVE CHAT
+        <span id="viewer-count" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:14px;background:rgba(255,255,255,.2);padding:4px 8px;border-radius:20px;">
+          🔴 <span id="viewer-number">30</span> online
+        </span>
+      </div>
+      <div id="chat-container"></div>
+      <div id="comment-form">
+        <form id="form">
+          <textarea id="user-comment" placeholder="Type your comment here..." rows="3" required></textarea>
+          <input type="submit" value="Send">
+        </form>
+      </div>
+    </div>
 
-    #chat-widget-wp-optimized .comment .content {
-        flex: 1;
-    }
-
-    #chat-widget-wp-optimized .comment .user {
-        font-weight: bold;
-        font-size: 18px;
-        color: #1f2937;
-        margin-bottom: 5px;
-    }
-
-    #chat-widget-wp-optimized .comment .text {
-        font-size: 18px;
-        color: #374151;
-        white-space: pre-wrap;
-    }
-
-    #chat-widget-wp-optimized #title {
-        text-align: center;
-        color: #ffffff;
-        background-color: #333333;
-        padding: 15px;
-        font-size: 24px;
-        font-family: 'Georgia', serif;
-        border-bottom: 2px solid #333333;
-        position: relative;
-    }
-
-    #chat-widget-wp-optimized #comment-form {
-        max-width: 100%;
-        margin: auto;
-        padding: 20px;
-        background-color: #fff;
-        border-top: 2px solid #ccc;
-    }
-
-    #chat-widget-wp-optimized textarea {
-        width: 100%; 
-        padding: 15px;
-        margin-top: 10px;
-        border: 2px solid #ddd;
-        border-radius: 8px;
-        box-sizing: border-box;
-        resize: none;
-        font-size: 16px;
-        font-family: 'Georgia', serif;
-    }
-
-    #chat-widget-wp-optimized input[type="submit"] {
-        display: block;
-        margin: auto;
-        margin-top: 15px;
-        background-color: #333333;
-        color: #fff;
-        border: none;
-        border-radius: 8px;
-        padding: 15px;
-        cursor: pointer;
-        font-size: 16px;
-        width: 100%;
-        transition: background-color 0.3s ease;
-    }
-
-    #chat-widget-wp-optimized input[type="submit"]:hover {
-        background-color: #333333dd;
-    }
-</style>
-
-<div id="title">LIVE CHAT<span id="viewer-count" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 14px; background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 20px;">🔴 <span id="viewer-number">30</span> online</span></div>
-<div id="chat-container"></div>
-<div id="comment-form">
-    <form id="form">
-        <textarea id="user-comment" placeholder="Type your comment here..." rows="3" required></textarea>
-        <input type="submit" value="Send">
-    </form>
-</div>
-
-<script>
-(function() {
-    const chatWidget = document.getElementById('chat-widget-wp-optimized');
-    if (!chatWidget) return; 
-    const chatContainer = chatWidget.querySelector('#chat-container');
-    const form = chatWidget.querySelector('#form');
-    const userCommentInput = chatWidget.querySelector('#user-comment');
-    
-    // Participant names
-    const participantNames = ["Elijah Jackson","Lucas Hernandez","Logan Thomas","Sophia White","Aiden Miller","Mason Lopez","Henry White","Henry Williams","Henry Martin","Mason Lee","Sophia Gonzalez","Charlotte Harris","Sophia Rodriguez","Alexander Smith","Alexander Jones","Lucas Taylor","Evelyn White","Ava Jones","Alexander Miller","Evelyn Brown","Amelia Martin","Mia Jones","Emma Brown","Sophia Taylor","Emma Martin","Abigail Garcia","Sebastian Garcia","Emma Thomas","Owen Davis","Evelyn Davis","Henry Wilson","Mia Thomas","Logan Williams","Liam Miller","Lucas White","Henry Rodriguez","Charlotte Gonzalez","Amelia Williams","Owen Williams","Sebastian Davis","Logan Brown","Amelia Anderson","Alexander Martin","Sebastian Johnson","Olivia Smith","Charlotte Martinez","Owen Taylor","Evelyn Hernandez","Sophia Williams","Owen Martin"];
-    function getRandomName() { 
-        return participantNames[Math.floor(Math.random() * participantNames.length)]; 
-    }
-
-    // Comment blocks with proper timing
-    const commentBlocks = [["I'VE NEVER SEEN ANYTHING LIKE THIS","OMG, it all makes sense now. I get why things haven't worked out before!","Yes, I want this in my life! 🙏🙏","So glad I got a spot for this! Missed the last one.","My friend from college told me about this! It's incredible!","It's true, this is a real revelation. The way this works is amazing.","This magnetic feeling is real! fr","Can't believe the difference this has made. It's my reality now!","This is the shift I've been waiting for in my life.","Listening to this was all I needed!","Came back to say that this actually works.","For anyone doubting, I can tell you this is v real.","I'm back to tell you to watch this till the end, you won't regret it!","Just came here to say it really works! Glad this video is still up!","My sister told me about this video! It really works!","Watch this video without fear! It actually works!","So grateful to be here 🙏","So glad I'm hearing this now","This technique is unbelievable, thank you","I'm loving this! ❤️","The wisdom and experience here is clear. Real results!","Came here on a recommendation from my cousin who won't stop talking about this video.","My life completely changed bc of this.","Saw clips of this on TikTok, it's truly amazing!","So glad this knowledge was shared! It changed my life!"],["He's well-known. I'm pretty sure I've seen him on TV before.","My coworker used this method, the results were incredible.","The wisdom and experience here are clear. Real results!","Came here on a recommendation from my cousin who won't stop talking about this video.","The logic behind this technique is flawless. It just makes sense.","I was skeptical, but seeing a friend's results convinced me.","Finally, someone who explains things in a way that actually works.","His reputation speaks for itself, that's why I'm here to listen.","This technique is unbelievable, thank you for sharing this.","The results are real! In just a few days, I could already see significant changes.","The transformation this causes is genuine. My neighbor is living proof.","I never imagined it was possible to achieve so much in so little time with one method.","A friend recommended it, and I decided to try. Now, I'm experiencing a prosperity I never thought possible.","This completely transformed my relationship with success.","Ngl, I didn't expect much, but this exceeded all my expectations.","This restored my faith that things can change for the better.","The way he teaches is what makes all the difference. He has a gift.","I've seen clips of his work on TikTok, it's really powerful.","After hearing so many positive stories, I had to come check it out.","This approach is different from anything I've ever seen. It's revolutionary.","His track record is impressive. You can trust what he says.","My sister told me about this method and her life changed completely.","His words have a weight, a truth that's rare to find.","This technique is a true mindset shift.","The knowledge he shares is invaluable."],["Payment confirmed! I'm in!","Just secured my spot! Didn't wanna risk missing out.","Bought it! My friend who recommended it, her results were insane.","Y'all, you can buy this without fear. It's legit.","Registration done! Phew, I made it!","My brother insisted so much that I bought it. Now I get why!","Spot secured! So pumped to start!","It's true, this stuff really works! Just bought mine.","Clearing my credit card limit to make sure the payment goes through!","I'm already in! Just finished my registration.","Saw my coworker getting results and didn't think twice. Purchased!","This is the best investment I've ever made. Spot guaranteed.","Already sent the link to my whole family. They gotta buy this too.","Don't think twice, just buy it! I just did.","I've tried everything, but only this seems to actually work. Buying now!","I'm here to say: it's not luck, it's the technique. And I just got my spot!","Don't leave it for later, the spots might run out! Got mine rn.","I'm buying right now! Don't wanna risk missing out.","My neighbor recommended it. Bought it instantly!","Thought it would be complicated, but it's so simple I decided to buy.","Came here bc of my cousin who won't shut up about this. Spot secured!","This is real, I can vouch for it. Just signed up.","Gonna secure my spot now! Bye-bye, scarcity!","Buying for the second time, just to make sure I have access forever.","I feel lighter just from securing my spot.","This is it! The solution I've been looking for. Purchase complete.","I'm doing this! Wish me luck! Payment processing...","It's not luck, it's a decision. And I just made mine.","Gonna grab my spot before they close it.","It works for anyone. I'm 65 and I just bought it!","I'm in! Let the new life begin!","My brother was so persistent I caved and bought it. I see why now.","This is the key that was missing. Registration confirmed.","I'm buying rn. I have a feeling this will sell out fast.","To everyone who made it this far: congrats, buy it and find the way.","The testimonials are real bc the result is real. Getting mine so I can be next.","Just go for it! You won't regret it. I just bought it.","I'm taking the plunge! Ready for a change. Purchase made.","Gonna secure my spot before this video is taken down!","Just signed up! Can't wait to start.","Y'all, it's worth every penny. Just buy it.","If you're reading this, it's your sign. I just bought mine.","Purchased! On my way to prosperity!","My only doubt was if it would work for me. Saw the comments and bought it!","It's not magic, it's a method. And I want in! Purchased.","Payment confirmed! Let the abundance begin!","Stop doubting and just try it. I just joined the team.","Best decision of the year, no doubt. Spot secured.","It really works, guys. You can trust it. Just got mine.","If I managed to buy it, anyone can. Believe it!","It's real. Simply real. That's why I bought it.","For those who are scared: fear doesn't pay bills. Action does. I bought it.","Registration done. Anxious for the results!","Just watching this unlocked something in me. Had to buy.","My wife thanks me every day for buying this.","I watched skeptically, but I'm convinced. Just bought it.","Don't postpone your happiness. The time is now. Purchase made.","The price is symbolic compared to the transformation it promises. Purchased.","Bought it and already applying it. The feeling is incredible!","Prosperity is our right. Glad I secured my path to it.","Guys, it's not a scam. It really works. My cousin used it.","This is a blessing. Purchase confirmed.","Recommending to everyone I love and buying mine now.","Confirmed! Let the journey begin!","I thought I'd seen it all, but this is next level. Had to get in.","You deserve this change. Believe it and buy it.","Just enrolled. Feeling like my life is about to change.","The proof that it works? All these comments. Mine is one more. Purchased.","Buying now! Don't wanna miss this golden opportunity.","This is worth 100x what it costs. Easy decision.","To all the skeptics: I get you, I was one of you. I just took the risk.","Finally! The answer to my prayers. Purchase made.","I'm securing my spot. My dream life awaits.","This is real, it works, and it will change your life. That's why I'm in.","I needed this. Thank you, universe, for showing me this path. Buying.","Buy it! You'll thank me later.","The suffering is over. A new era began with this purchase.","Registration done! Let's prosper together!","It's the best gift you can give yourself. I just treated myself.","I saw, I doubted, and now I'm buying. No more waiting.","Okay, you convinced me. Payment sent.","Done, spot secured. What a relief!","My friend won't stop talking about it. Had to see it and buy.","You can trust this blindly. I did and I bought it.","The card went through! I'm officially in.","Not gonna be the only one left out. Purchase made.","The energy in these comments is contagious! Buying it too!","Got the link in a group chat and ran to get it. I'm in!","It's now or never. Purchase confirmed.","This many happy people can't be wrong. One more for the team!","Bought it! Simple as that.","Good thing I got paid today. Spot secured!","Saw an ad, read the comments, and bought it. Simple.","Okay, okay, I'm sold. Where's the buy button?","Found the button! Purchase successful!","My gut screamed 'buy it!'. I listened.","Processing... Approved! Let's gooo!","I don't usually impulse buy, but this is different. I feel it's real.","Secured! Now just gotta wait for the access info.","The community seems awesome. Wanna be a part of it! Bought.","My dad did it and it worked. Now it's my turn.","Sold! Take my money!","This is what I was asking for. A sign. Purchase made.","It's an investment in myself. Purchase confirmed.","I've seen this guy on TV. He's legit. Buying.","The promise is strong, and so are the testimonials. I'll take the chance!","Done. Now I'm one of you.","If half of what they say is true, it's already worth it. Purchased.","Tomorrow might be too late. Got mine today.","I won't regret this. I'm sure of it. Purchase made.","Thanks for the opportunity. Spot secured.","Enough procrastinating on my happiness. I'm in.","Did the math and the investment is low for the return. Bought it.","My mom told me to buy it. Mom knows best. Done!","That's it. Easiest decision of my day.","Payment sent. Awaiting confirmation.","Confirmed! So happy!","Let's go! On to the change! One more purchased.","The social proof here is too strong. Impossible not to buy.","Bye, old life. Hello, future! Spot secured.","Purchased. And with the feeling that I did the right thing.","My uncle called me JUST to talk about this. Had to buy.","This isn't an expense, it's an investment. And I just invested.","Okay, let's see what this is all about. Purchased.","I'm jumping in headfirst. Purchase made.","Thanks to everyone for the comments, you gave me the confidence to buy.","Spot secured! I'm so happy!","Can't wait to tell my own success story. For now, just the purchase.","Done, bought it. Now to focus and apply.","If it works for me like it did for my neighbor, I'm set!","It wasn't hard to convince me. The facts are there. I bought it.","It's my turn to change my life. Purchase complete.","That's it. Clicked buy. No turning back.","Faith moves mountains, and comments move people to buy. In!","Another satisfied customer here (with the purchase, for now!).","Glad there were still spots left. Mine is guaranteed.","This is too real to ignore. Just bought it.","Goodbye, doubts. Purchase made.","My husband doubted it, but I bought it anyway. I'll prove it works.","Let's do this! Just signed up.","Opportunities like this don't come around often. I grabbed mine.","Bought it! And already recommending it to a friend.","The feeling of making a decision to change your life is great. Purchase made.","Finally got the courage. I'm in.","All the signs were pointing to this. Purchase confirmed.","Truth is, I was waiting for something like this. Bought.","Couldn't let it pass. Spot secured.","Tomorrow I'll thank myself for buying this today.","Let's see the magic happen. Registration done.","Saw so many people saying good things that I had to try it. Purchased.","That's right, y'all! Another one for the achievers' team!","Done watching others win. Now it's my turn. I bought it.","Bought, confirmed, and with a heart full of hope.","The best part of buying is the hope that comes with it. I'm in.","My coworker did a complete 180. I need this. Bought.","Card charged! Spot secured!","Seems too good to be true, but I'll pay to see. Purchased.","If you're on the fence, just buy it. That's what I did.","Done, problem solved. I bought the solution.","Let the journey begin! Purchase complete.","After reading like 50 comments, I had no more doubts. Purchased.","The energy here is surreal. Had to be a part of it. Registration done.","Purchased! A toast to our success!","My mentor recommended this. His word is law to me. I bought it.","Ngl, I was scared. But the desire to change was stronger. I bought it.","Now it's official! Part of the group!","What a relief to get a spot. Thought I wouldn't make it in time.","Bought it and I'm already feeling the energy of change.","My cousin paid off her debt with this. I gotta try. Purchase made.","The payment went through! Now just gotta wait.","This is real and I'm gonna prove it to everyone. I bought it!","I don't sleep on opportunities! Spot secured!","Decided. Purchased. Period.","Thanks for keeping registration open. I got mine!","Is it real? Only one way to find out. And I just did it.","Finally, something that seems to work. Placing my bets. I bought it.","The wave of positivity got me. I bought it!","My pastor talked about the power of action. This is my action. I bought it.","Let's go! Another one in the house!","Purchase made and excitement is through the roof!","I believe this is going to work. That's why I bought it.","Done! Now just reap the rewards.","The recommendation came from a very trustworthy person. I didn't hesitate.","The next success story will be mine. You can quote me on that. I bought it.","I'm in. That's it.","A journey of a thousand miles begins with a single step. Mine was clicking 'buy'."]];
-    const usedComments = new Set();
-    
-    function getUniqueComment(comments) {
-        const availableComments = comments.filter(comment => !usedComments.has(comment));
-        
-        if (availableComments.length === 0) {
-            usedComments.clear();
-            return comments[Math.floor(Math.random() * comments.length)];
-        }
-        
-        const selectedComment = availableComments[Math.floor(Math.random() * availableComments.length)];
-        usedComments.add(selectedComment);
-        return selectedComment;
-    }
-
-    function addComment(username, text, isYou) { 
-        const newComment = document.createElement('div'); 
-        newComment.classList.add('comment'); 
-        newComment.innerHTML = `<div class="content"><span class="user">${isYou ? 'Você' : username}:</span><div class="text">${text}</div></div>`; 
-        chatContainer.prepend(newComment); 
-        
-        // Keep only the last 3 messages visible
-        if (chatContainer.children.length > 3) { 
-            chatContainer.removeChild(chatContainer.lastChild); 
-        } 
-    }
-    
-    form.addEventListener('submit', function (event) { 
-        event.preventDefault(); 
-        const comment = userCommentInput.value; 
-        if (comment.trim()) { 
-            addComment('Você', comment, true); 
-            userCommentInput.value = ''; 
-        } 
-    });
-
-    // Start automatic comments based on blocks
-    let currentTime = 0;
-    
-    // Schedule each block
-    commentBlocks.forEach((blockComments, blockIndex) => {
-        if (blockComments.length === 0) return;
-        
-        const startTimeMs = [0,180000,1500000];
-        const intervalMs = [5000,10000,1000];
-        
-        setTimeout(() => {
-            let messageCount = 0;
-            const maxMessages = Math.min(blockComments.length, 20);
-            
-            const commentInterval = setInterval(() => {
-                if (messageCount >= maxMessages) {
-                    clearInterval(commentInterval);
-                    return;
-                }
-                
-                const uniqueComment = getUniqueComment(blockComments);
-                const randomName = getRandomName();
-                addComment(randomName, uniqueComment, false);
-                messageCount++;
-            }, intervalMs[blockIndex] || 10000);
-            
-            // Stop after block duration
-            setTimeout(() => clearInterval(commentInterval), (intervalMs[blockIndex] || 10000) * maxMessages + 30000);
-        }, startTimeMs[blockIndex] || 0);
-    });
-
-    // Add initial welcome message
-    setTimeout(() => {
-        addComment('Moderator', 'Welcome to the chat! 👋', false);
-    }, 1000);
-    
-    // Viewer count fluctuation with block-based progression
-    const viewerCountElement = document.getElementById('viewer-number');
-    if (viewerCountElement) {
-        const blockSettings = [{"id":"1","name":"Bloco 1 - Aquecimento","startTime":"00:00","intervalMin":15,"intervalMax":45,"intensity":"medium","viewersMin":30,"viewersMax":800},{"id":"2","name":"Bloco 2 - Engajamento","startTime":"03:00","intervalMin":10,"intervalMax":30,"intensity":"high","viewersMin":800,"viewersMax":1500},{"id":"3","name":"Bloco 3 - Conversão","startTime":"25:00","intervalMin":5,"intervalMax":25,"intensity":"high","viewersMin":1500,"viewersMax":2500}];
-        let currentBlock = 0;
-        let currentViewers = blockSettings[0]?.viewersMin || 30;
-        let targetViewers = blockSettings[0]?.viewersMax || 80;
-        
-        viewerCountElement.textContent = currentViewers;
-        
-        const updateViewerCount = () => {
-            // Natural growth towards target
-            const growthRate = 0.8; // 80% of the way to target each update
-            const randomVariation = Math.floor(Math.random() * 10) - 5; // ±5 variation
-            
-            if (currentViewers < targetViewers) {
-                currentViewers = Math.min(targetViewers, currentViewers + Math.ceil((targetViewers - currentViewers) * growthRate / 10) + randomVariation);
-            } else {
-                currentViewers = Math.max(Math.floor(targetViewers * 0.9), currentViewers + randomVariation);
-            }
-            
-            viewerCountElement.textContent = Math.max(1, currentViewers);
-        };
-        
-        // Update every 8-15 seconds
-        setInterval(updateViewerCount, 8000 + Math.random() * 7000);
-        
-        // Progress through blocks every 3 minutes
-        setInterval(() => {
-            currentBlock = (currentBlock + 1) % blockSettings.length;
-            const nextBlock = blockSettings[currentBlock];
-            if (nextBlock) {
-                currentViewers = Math.max(currentViewers, nextBlock.viewersMin);
-                targetViewers = nextBlock.viewersMax;
-            }
-        }, 180000); // 3 minutes
-    }
-})();
-</script>
-</div>
   </header>
 
   <footer>
-    <div>Copyright © 2025. All Rights Reserved. <a href="terms.html">Terms</a> <a href="privacy.html">Privacy</a>
-    </div>
+    <div>Copyright © 2025. All Rights Reserved. <a href="terms.html">Terms</a> <a href="privacy.html">Privacy</a></div>
   </footer>
 
-  <script
-  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-  data-utmify-prevent-xcod-sck
-  data-utmify-prevent-subids
-  async
-  defer
-></script>
+  <!-- UTM source (não bloqueante) -->
+  <script async defer src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+          data-utmify-prevent-xcod-sck data-utmify-prevent-subids></script>
 
+  <script>
+    // Helper: carrega script externo 1x
+    function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.async=true;s.defer=true;s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
+
+    // Inicializa VTurb quando clicar ou quando entrar na viewport
+    (function initLitePlayer(){
+      const shell = document.getElementById('lite-player');
+      if(!shell) return;
+      const account = shell.getAttribute('data-account');
+      const playerId = shell.getAttribute('data-player-id');
+
+      const mountRealPlayer = async () => {
+        if (shell.dataset.loaded) return;
+        shell.dataset.loaded = "1";
+        // Remove poster + botão
+        shell.innerHTML = '';
+        // Cria webcomponent + injeta script do player
+        const el = document.createElement('vturb-smartplayer');
+        el.id = 'vid-' + playerId;
+        el.style.display = 'block'; el.style.margin = '0 auto'; el.style.width = '100%'; el.style.height = '100%';
+        shell.appendChild(el);
+        await loadScript(`https://scripts.converteai.net/${account}/players/${playerId}/v4/player.js`);
+      };
+
+      // Click para carregar
+      shell.addEventListener('click', mountRealPlayer, {once:true});
+
+      // Lazy por viewport (para garantir LCP melhor sem bloquear)
+      if ('IntersectionObserver' in window){
+        const io = new IntersectionObserver((entries)=>{
+          entries.forEach(e=>{ if(e.isIntersecting){ mountRealPlayer(); io.disconnect(); }});
+        },{rootMargin:'200px'});
+        io.observe(shell);
+      }
+    })();
+
+    // Lazy do CHAT: inicializa somente quando entrar na viewport
+    (function lazyChat(){
+      const wrap = document.getElementById('chat-widget-wp-optimized');
+      if(!wrap) return;
+
+      function startChat(){
+        if (wrap.dataset.started) return;
+        wrap.dataset.started = "1";
+        wrap.classList.remove('lazy');
+
+        // === O SEU SCRIPT ORIGINAL DO CHAT (encurtado aqui) ===
+        (function(){
+          const chatContainer = wrap.querySelector('#chat-container');
+          const form = wrap.querySelector('#form');
+          const userCommentInput = wrap.querySelector('#user-comment');
+
+          const participantNames = ["Elijah Jackson","Lucas Hernandez","Logan Thomas","Sophia White","Aiden Miller","Mason Lopez","Henry White","Henry Williams","Henry Martin","Mason Lee","Sophia Gonzalez","Charlotte Harris","Sophia Rodriguez","Alexander Smith","Alexander Jones","Lucas Taylor","Evelyn White","Ava Jones","Alexander Miller","Evelyn Brown","Amelia Martin","Mia Jones","Emma Brown","Sophia Taylor","Emma Martin","Abigail Garcia","Sebastian Garcia","Emma Thomas","Owen Davis","Evelyn Davis","Henry Wilson","Mia Thomas","Logan Williams","Liam Miller","Lucas White","Henry Rodriguez","Charlotte Gonzalez","Amelia Williams","Owen Williams","Sebastian Davis","Logan Brown","Amelia Anderson","Alexander Martin","Sebastian Johnson","Olivia Smith","Charlotte Martinez","Owen Taylor","Evelyn Hernandez","Sophia Williams","Owen Martin"];
+          const commentBlocks=[["I'VE NEVER SEEN ANYTHING LIKE THIS","OMG, it all makes sense now. I get why things haven't worked out before!","Yes, I want this in my life! 🙏🙏","So glad I got a spot for this! Missed the last one.","My friend from college told me about this! It's incredible!","It's true, this is a real revelation. The way this works is amazing.","This magnetic feeling is real! fr","Can't believe the difference this has made. It's my reality now!","This is the shift I've been waiting for in my life.","Listening to this was all I needed!","Came back to say that this actually works.","For anyone doubting, I can tell you this is v real.","I'm back to tell you to watch this till the end, you won't regret it!","Just came here to say it really works! Glad this video is still up!","My sister told me about this video! It really works!","Watch this video without fear! It actually works!","So grateful to be here 🙏","So glad I'm hearing this now","This technique is unbelievable, thank you","I'm loving this! ❤️","The wisdom and experience here is clear. Real results!","Came here on a recommendation from my cousin who won't stop talking about this video.","My life completely changed bc of this.","Saw clips of this on TikTok, it's truly amazing!","So glad this knowledge was shared! It changed my life!"],["He's well-known. I'm pretty sure I've seen him on TV before.","My coworker used this method, the results were incredible.","The wisdom and experience here are clear. Real results!","Came here on a recommendation from my cousin who won't stop talking about this video.","The logic behind this technique is flawless. It just makes sense.","I was skeptical, but seeing a friend's results convinced me.","Finally, someone who explains things in a way that actually works.","His reputation speaks for itself, that's why I'm here to listen.","This technique is unbelievable, thank you for sharing this.","The results are real! In just a few days, I could already see significant changes.","The transformation this causes is genuine. My neighbor is living proof.","I never imagined it was possible to achieve so much in so little time with one method.","A friend recommended it, and I decided to try. Now, I'm experiencing a prosperity I never thought possible.","This completely transformed my relationship with success.","Ngl, I didn't expect much, but this exceeded all my expectations.","This restored my faith that things can change for the better.","The way he teaches is what makes all the difference. He has a gift.","I've seen clips of his work on TikTok, it's really powerful.","After hearing so many positive stories, I had to come check it out.","This approach is different from anything I've ever seen. It's revolutionary.","His track record is impressive. You can trust what he says.","My sister told me about this method and her life changed completely.","His words have a weight, a truth that's rare to find.","This technique is a true mindset shift.","The knowledge he shares is invaluable."],["Payment confirmed! I'm in!","Just secured my spot! Didn't wanna risk missing out.","Bought it! My friend who recommended it, her results were insane.","Y'all, you can buy this without fear. It's legit.","Registration done! Phew, I made it!"]];
+
+          const usedComments = new Set();
+          const getRandomName = () => participantNames[Math.floor(Math.random()*participantNames.length)];
+          function getUniqueComment(comments){
+            const available = comments.filter(c=>!usedComments.has(c));
+            if(!available.length){usedComments.clear(); return comments[Math.floor(Math.random()*comments.length)];}
+            const c = available[Math.floor(Math.random()*available.length)]; usedComments.add(c); return c;
+          }
+          function addComment(username,text,isYou){
+            const div=document.createElement('div'); div.className='comment';
+            div.innerHTML=`<div class="content"><span class="user">${isYou?'Você':username}:</span><div class="text">${text}</div></div>`;
+            chatContainer.prepend(div);
+            if(chatContainer.children.length>3) chatContainer.removeChild(chatContainer.lastChild);
+          }
+          form.addEventListener('submit',e=>{
+            e.preventDefault();
+            const v=userCommentInput.value;
+            if(v.trim()){ addComment('Você',v,true); userCommentInput.value='';}
+          });
+          setTimeout(()=>addComment('Moderator','Welcome to the chat! 👋',false),800);
+
+          const viewerCountElement = document.getElementById('viewer-number');
+          if(viewerCountElement){
+            const blockSettings=[{"id":"1","name":"Bloco 1 - Aquecimento","intervalMin":15,"intervalMax":45,"viewersMin":30,"viewersMax":800},{"id":"2","name":"Bloco 2 - Engajamento","intervalMin":10,"intervalMax":30,"viewersMin":800,"viewersMax":1500},{"id":"3","name":"Bloco 3 - Conversão","intervalMin":5,"intervalMax":25,"viewersMin":1500,"viewersMax":2500}];
+            let currentBlock=0, currentViewers=blockSettings[0].viewersMin, targetViewers=blockSettings[0].viewersMax;
+            viewerCountElement.textContent=currentViewers;
+            const updateViewer = ()=>{ const growth=.8, jitter=Math.floor(Math.random()*10)-5;
+              if(currentViewers<targetViewers){ currentViewers=Math.min(targetViewers, currentViewers+Math.ceil((targetViewers-currentViewers)*growth/10)+jitter);}
+              else{ currentViewers=Math.max(Math.floor(targetViewers*.9), currentViewers+jitter);}
+              viewerCountElement.textContent=Math.max(1,currentViewers);
+            };
+            setInterval(updateViewer, 8000 + Math.random()*7000);
+            setInterval(()=>{ currentBlock=(currentBlock+1)%blockSettings.length; const next=blockSettings[currentBlock];
+              currentViewers=Math.max(currentViewers,next.viewersMin); targetViewers=next.viewersMax;},180000);
+          }
+
+          // disparo dos blocos (mais leve)
+          const startTimes=[0,180000,1500000], intervals=[5000,10000,1200];
+          commentBlocks.forEach((block,idx)=>{
+            setTimeout(()=>{
+              let sent=0, max=Math.min(block.length,20);
+              const h=setInterval(()=>{
+                if(sent>=max){clearInterval(h);return;}
+                addComment(getRandomName(), getUniqueComment(block), false); sent++;
+              }, intervals[idx]||10000);
+              setTimeout(()=>clearInterval(h),(intervals[idx]||10000)*max+30000);
+            }, startTimes[idx]||0);
+          });
+        })();
+      }
+
+      const onView = () => {
+        if ('IntersectionObserver' in window){
+          const io = new IntersectionObserver((entries)=>{
+            entries.forEach(e=>{ if(e.isIntersecting){ startChat(); io.disconnect(); }});
+          },{rootMargin:'200px'});
+          io.observe(wrap);
+        } else {
+          // fallback
+          window.addEventListener('load', startChat, {once:true});
+        }
+      };
+      onView();
+    })();
+  </script>
 </body>
 </html>
